@@ -8,7 +8,6 @@ const fs = require("fs");
 export default () => (req, res) => {
     // point to the html file created by CRA's build tool
     const filePath = path.resolve(__dirname, "..", "..", "build", "index.html");
-    console.log("getting file: " + filePath);
     fs.readFile(filePath, "utf8", (error, htmlData) => {
         if (error) {
             console.error("error", error);
@@ -16,9 +15,8 @@ export default () => (req, res) => {
         }
 
         // render the app as a string
-        // const html = renderToString(<App />);
-        console.log("getting ready to render on the server");
-        const html = `<h1>This is rendered on the server</h1>`
+        const html = renderToString(<App />);
+        // const html = `<h1>This is rendered on the server</h1>`
 
         // inject the rendered app into our html and send it
         return res.send(

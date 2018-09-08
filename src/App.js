@@ -5,7 +5,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>is this from the server?</h1>
+        <h1>This H1 is rendered on the server!</h1>
       </div>
     );
   }
