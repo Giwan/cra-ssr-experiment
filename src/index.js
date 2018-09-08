@@ -3,4 +3,5 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-// ReactDOM.render(<App />, document.getElementById('root'));
+// esures the website can dynamically respond to the user (Javascript)
+ReactDOM.hydrate(<App />, document.getElementById('root'));
