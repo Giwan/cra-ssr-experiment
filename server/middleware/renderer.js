@@ -1,11 +1,12 @@
 import React from "react";
 import { renderToString } from "react-dom/server";
 import App from "../../src/App";
+import { Provider } from "react-redux";
 
 const path = require("path");
 const fs = require("fs");
 
-export default () => (req, res) => {
+export default (store) => (req, res, next) => {
     // point to the html file created by CRA's build tool
     const filePath = path.resolve(__dirname, "..", "..", "build", "index.html");
     fs.readFile(filePath, "utf8", (error, htmlData) => {
@@ -15,8 +16,7 @@ export default () => (req, res) => {
         }
 
         // render the app as a string
-        const html = renderToString(<App />);
-        // const html = `<h1>This is rendered on the server</h1>`
+        const html = renderToString(<Provider store={store}><App /></Provider>);
 
         // inject the rendered app into our html and send it
         return res.send(
