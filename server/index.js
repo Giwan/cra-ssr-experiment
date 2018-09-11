@@ -1,5 +1,6 @@
 import express from "express";
 import router from "./controller/index";
+import Loadable from "react-loadable";
 
 const app = express();
 const port = 4000;
@@ -8,7 +9,10 @@ const port = 4000;
 app.use(router);
 
 // start the app
-app.listen(port, () => {
-    console.log(`express running on port ${port}`);
-});
+Loadable.preloadAll().then(() => {
+
+    app.listen(port, () => {
+        console.log(`express running on port ${port}`);
+    });
+})
 
