@@ -18,10 +18,14 @@ export default (store) => (req, res, next) => {
         // render the app as a string
         const html = renderToString(<Provider store={store}><App /></Provider>);
 
+        const reduxState = JSON.stringify(store.getState());
+
+
         // inject the rendered app into our html and send it
         return res.send(
             htmlData
                 .replace('<div id="root"></div>', `<div id="root">${html}</div>`)
+                .replace('"__SERVER_REDUX_STATE__"', reduxState)
         );
     })
 }
