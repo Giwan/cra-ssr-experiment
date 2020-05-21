@@ -10,9 +10,7 @@ app.use(router);
 
 // start the app
 Loadable.preloadAll().then(() => {
-
-    app.listen(port, () => {
-        console.log(`express running on port ${port}`);
-    });
-})
-
+  app.listen(port, () => {
+    console.log(`express running on port ${port}`);
+  });
+});
