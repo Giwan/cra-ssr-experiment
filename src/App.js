@@ -3,6 +3,7 @@ import "./App.css";
 import { connect } from "react-redux";
 import { setMessage } from "./store/reducers/appReducer";
 import Book from "./components/Book/Book";
+import { Link } from "react-router-dom";
 
 const App = (props) => {
   const [value, setValue] = useState("click me");
@@ -15,7 +16,10 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <h1>This H1 is rendered on the server!</h1>
+      <h1>SSR example using redux and React-router</h1>
+      <nav>
+        <Link to="/test">Alternative test page</Link>
+      </nav>
       message: {props.message}
       <h2 onClick={() => setValue("bla")}>{value}</h2>
       <Book />

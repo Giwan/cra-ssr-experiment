@@ -1,5 +1,5 @@
 const initialState = {
-  book: null,
+  book: {},
 };
 
 const SET_BOOK = "SET_BOOK";
