@@ -3,18 +3,15 @@ import { hydrate, render } from "react-dom";
 import App from "./App";
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
-import { Router, Route, Switch } from "react-router-dom";
-import AlternativeAppPage from "./components/AlternativeAppPage/AlternativeAppPage";
+import { Router } from "react-router-dom";
 import history from "./history";
 
-const store = configureStore(window.REDUX_STATE || {});
+const reduxData = window.REDUX_STATE; // from server
+const store = configureStore(reduxData);
 const AppBundle = () => (
   <Router history={history}>
     <Provider store={store}>
-      <Switch>
-        <Route path="/test" component={AlternativeAppPage} />
-        <Route path="/" component={App} />
-      </Switch>
+      <App />
     </Provider>
   </Router>
 );

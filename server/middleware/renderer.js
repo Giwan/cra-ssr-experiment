@@ -2,7 +2,8 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import App from "../../src/App";
 import { Provider } from "react-redux";
-import { StaticRouter, Route } from "react-router-dom";
+import { StaticRouter } from "react-router-dom";
+import serialize from "serialize-javascript";
 
 const path = require("path");
 const fs = require("fs");
@@ -16,22 +17,25 @@ export default (store) => (req, res, next) => {
       return res.status(404).end();
     }
 
+    const context = {};
+
     // render the app as a string
     const html = renderToString(
-      <StaticRouter location={req.url} context={{}}>
+      <StaticRouter location={req.url} context={context}>
         <Provider store={store}>
-          <Route path="/" component={App} />
+          <App />
         </Provider>
       </StaticRouter>
     );
 
-    const reduxState = JSON.stringify(store.getState());
+    const reduxState = serialize(store.getState());
 
     // inject the rendered app into our html and send it
+    // IMPORTANT: No spaces on `window.REDUX_STATE="{}"`. The response is built from the uglified html file
     return res.send(
       htmlData
+        .replace("window.REDUX_STATE={}", `window.REDUX_STATE = ${reduxState}`)
         .replace('<div id="root"></div>', `<div id="root">${html}</div>`)
-        .replace('"__SERVER_REDUX_STATE__"', reduxState)
     );
   });
 };

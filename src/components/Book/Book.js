@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 const Book = ({ book = {} }) => (
   <div>
+    <h1>Book</h1>
     <h1>{book.title1}</h1>
     <h1>{book.title2}</h1>
   </div>

@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import { connect } from "react-redux";
 import { setMessage } from "./store/reducers/appReducer";
-import Book from "./components/Book/Book";
 import { Link } from "react-router-dom";
+import { fetchListOfBooks } from "./actions/bookActions";
+import routes from "./routes";
+import { Switch, Route } from "react-router-dom";
 
 const App = (props) => {
-  const [value, setValue] = useState("click me");
-
-  useEffect(() => {
-    if (!props.message) {
-      props.updateMessage("message from the client");
-    }
-  });
-
   return (
     <div className="App">
       <h1>SSR example using redux and React-router</h1>
+      <p>
+        This demo page will show two separate components. The first component
+        lets you see all the books that are available.
+      </p>
+      <p>The other component looks at a particular book in detail</p>
       <nav>
-        <Link to="/test">Alternative test page</Link>
+        <Link to="/books">Book Shop</Link>
       </nav>
-      message: {props.message}
-      <h2 onClick={() => setValue("bla")}>{value}</h2>
-      <Book />
+
+      <Switch>
+        {routes.map((route) => (
+          <Route {...route} key={route.path} {...props} />
+        ))}
+      </Switch>
     </div>
   );
 };
@@ -33,6 +35,7 @@ const mapStateToProps = ({ app = {} }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateMessage: (txt) => dispatch(setMessage(txt)),
+  fetchListOfBooks,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
