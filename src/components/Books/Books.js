@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { fetchListOfBooks } from "../../actions/bookActions";
+import styles from "./books.module.css";
 
 const Books = ({ books, fetchListOfBooks, isLoading }) => {
   useEffect(() => {
@@ -12,8 +13,8 @@ const Books = ({ books, fetchListOfBooks, isLoading }) => {
   }, [isLoading, books, fetchListOfBooks]);
   return (
     <>
-      <h1>List of books</h1>
-      <nav>
+      <nav className={styles.booksList}>
+        <h1>List of books</h1>
         <ul>
           {books.map((book) => (
             <li key={book._id}>
